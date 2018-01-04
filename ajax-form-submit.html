@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax上传表单的例子</title>
+    <script src="./Jquery.js"></script>
+</head>
+<body>
+    <form enctype="multipart/form-data" method="POST" action="" id="uploadForm">
+          <input id="files" type="file" name="fileName"/>
+          <!--fileName为与后端约定好的文件名称由后端提供-->
+          <input type="submit" id="submit" value="提交">
+    </form>
+    <script type="text/javascript">
+       $(function(){
+          $("#submit").on("click",function(){
+              var file=$("#files")[0].files[0];
+              var fileName=file.name;//获取文件名称可以作为参数
+              var formData=new FormData($("#uploadForm")[0]);//使用new FormData方式来提交。
+              $.ajax({
+                  url:"http://localhost:8080/xxxx/xxxx"+fileName,
+                  type:"post",
+                  data:formData,
+                  async:false,
+                  cache:false,
+                  contentType:false,
+                  processData:false,
+                  success:function(data){
+                       console.log(data)
+                  },
+                  error:function(data){
+                      console.log(data.responseMsg)
+                  }
+              })
+          })
+       })
+    </script>
+</body>
+</html>
